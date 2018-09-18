@@ -11,38 +11,31 @@ package br.com.ufpel.naivebayesian;
  */
 public class Word {
 
-    private String word;	//the word itself
-    private int spamCount;	//number of this words appearances in spam messages
-    private int hamCount;	//number of this words appearances in ham messages
-    private float spamRate;	//spamCount divided by total spam count
-    private float hamRate;	//hamCount divided by total ham count
-    private float probOfSpam;	//probability of word being spam
+    private String word;
+    private int spamCount;
+    private int notSpamCount;
+    private float spamRate;
+    private float notSpamRate;
+    private float probOfSpam;
 
     public Word(String word) {
         this.word = word;
-        spamCount = 0;
-        hamCount = 0;
-        spamRate = 0.0f;
-        hamRate = 0.0f;
-        probOfSpam = 0.0f;
     }
 
     public void countSpam() {
         spamCount++;
     }
 
-    public void countHam() {
-        hamCount++;
+    public void countNotSpam() {
+        notSpamCount++;
     }
 
-    //calculates the probability of spam,
-    //and gives the smallest and biggest probabilities more precedence
-    public void calculateProbability(int totSpam, int totHam) {
+    public void calculateProbability(int totSpam, int totNotSpam) {
         spamRate = spamCount / (float) totSpam;
-        hamRate = hamCount / (float) totHam;
+        notSpamRate = notSpamCount / (float) totNotSpam;
 
-        if (spamRate + hamRate > 0) {
-            probOfSpam = spamRate / (spamRate + hamRate);
+        if (spamRate + notSpamRate > 0) {
+            probOfSpam = spamRate / (spamRate + notSpamRate);
         }
         if (probOfSpam < 0.01f) {
             probOfSpam = 0.01f;
@@ -59,12 +52,12 @@ public class Word {
         return spamRate;
     }
 
-    public float getHamRate() {
-        return hamRate;
+    public float getNotSpamRate() {
+        return notSpamRate;
     }
 
-    public void setHamRate(float hamRate) {
-        this.hamRate = hamRate;
+    public void setNotSpamRate(float notSpamRate) {
+        this.notSpamRate = notSpamRate;
     }
 
     public float getProbOfSpam() {
